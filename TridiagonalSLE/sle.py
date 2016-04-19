@@ -69,3 +69,22 @@ class TridiagonalMatrix:
             middle +
             [[0] * (self.size - 2) + self.a[-1:] + self.b[-1:]]
         )
+
+    def __add__(self, other):
+        pass
+
+    def __neg__(self):
+        pass
+
+    def __sub__(self, other):
+        pass
+
+    def __mul__(self, other):
+        pass
+
+    def linsolve(self, vector):
+        """
+        Solve SLE $Ax = vector$
+        return x
+        """
+        pass
