@@ -71,16 +71,31 @@ class TridiagonalMatrix:
         )
 
     def __add__(self, other):
-        pass
+        assert self.size == other.size, "Matrices should have same size"
+        return TridiagonalMatrix(
+            [x + y for x, y in zip(self.a, other.a)],
+            [x + y for x, y in zip(self.b, other.b)],
+            [x + y for x, y in zip(self.c, other.c)]
+        )
 
     def __neg__(self):
-        pass
+        return TridiagonalMatrix(
+            [-x for x in self.a],
+            [-x for x in self.b],
+            [-x for x in self.c]
+        )
 
     def __sub__(self, other):
-        pass
+        return self + (-other)
 
     def __mul__(self, other):
-        pass
+        assert self.size == other.size, "Matrices should have same size"
+        if isinstance(other, TridiagonalMatrix):
+            pass
+        elif isinstance(other, Vector):
+            pass
+        raise TypeError(
+            "Wring type for multiplication: {}".format(other.__class__))
 
     def linsolve(self, vector):
         """
