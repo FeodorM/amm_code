@@ -11,12 +11,14 @@ class TridiagonalMatrix:
         self.a[0]  = 0
         self.c[-1] = 0
 
-    @property
-    def size(self):
-        return self.b.size
+    def __len__(self):
+        return len(self.b)
 
     @staticmethod
     def random(size):
+        """
+        Return random tridiagonal matrix of given size
+        """
         return TridiagonalMatrix(*[Vector.random(size) for _ in range(3)])
 
     @staticmethod
@@ -39,12 +41,6 @@ class TridiagonalMatrix:
                 return TridiagonalMatrix(*[Vector.from_file(file)
                                             for _ in range(3)])
 
-    def __repr__(self):
-        return "TridiagonalMatrix({self.a}\n{i}{self.b}\n{i}{self.c}".format(
-            i="                  ",
-            self=self
-        )
-
     def __str__(self):
         return '\n'.join(
             '\t'.join(str(round(x, 3)) for x in line)
@@ -56,7 +52,10 @@ class TridiagonalMatrix:
         return [0] * n
 
     def matrix(self):
-        size = self.size - 2
+        """
+        Return representation of self as a matrix
+        """
+        size = len(self) - 2
         zeros = self._zeros
         middle = [
             zeros(i - 1) + [a, b, c] + zeros(size - i)
@@ -65,13 +64,13 @@ class TridiagonalMatrix:
                 )
         ]
         return (
-            [self.b[:1] + self.c[0:1] + [0] * (self.size - 2)] +
+            [self.b[:1] + self.c[0:1] + [0] * (len(self) - 2)] +
             middle +
-            [[0] * (self.size - 2) + self.a[-1:] + self.b[-1:]]
+            [[0] * (len(self) - 2) + self.a[-1:] + self.b[-1:]]
         )
 
     def __add__(self, other):
-        assert self.size == other.size, "Matrices should have same size"
+        assert len(self) == len(other), "Matrices should have same size"
         return TridiagonalMatrix(
             [x + y for x, y in zip(self.a, other.a)],
             [x + y for x, y in zip(self.b, other.b)],
@@ -89,7 +88,10 @@ class TridiagonalMatrix:
         return self + (-other)
 
     def __mul__(self, other):
-        assert self.size == other.size, "Matrices should have same size"
+        """
+        Matrix product with tridiagonal matrix or vector
+        """
+        assert len(self) == len(other), "Matrices should have same size"
         if isinstance(other, TridiagonalMatrix):
             pass
         elif isinstance(other, Vector):

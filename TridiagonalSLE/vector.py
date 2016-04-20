@@ -5,8 +5,7 @@ class Vector:
     def __init__(self, list_):
         self.list = list(list_)
 
-	@property
-    def size(self):
+	def __len__(self):
         return len(self.list)
 
     @staticmethod
@@ -33,7 +32,7 @@ class Vector:
         self.list[index] = value
 
     def __add__(self, other):
-        assert self.size == other.size, "Vectors should have same size"
+        assert len(self) == len(other), "Vectors should have same size"
         return Vector(x + y for x, y in zip(self.list, other.list))
 
     def __sub__(self, other):
@@ -44,5 +43,5 @@ class Vector:
 
     def dot(self, other):
         """Dot (scalar) product"""
-        assert self.size == other.size, "Vectors should have same size"
+        assert len(self) == len(other), "Vectors should have same size"
         return sum(x * y for x, y in zip(self.list, other.list))
