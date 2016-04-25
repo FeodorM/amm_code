@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from vector import Vector
 
 class TridiagonalMatrix:
@@ -120,8 +121,7 @@ class TridiagonalMatrix:
         assert len(self) == len(vector), "Vector and matrix should have same size"
         ls = [0]
         ms = [0]
-        for i, a, b, c, d in zip(range(len(self)),
-                self.a, self.b, self.c, vector):
+        for a, b, c, d in zip(self.a, self.b, self.c, vector):
             ms.append((d - a * ms[-1]) / (b - a * ls[-1]))
             ls.append(c / (b - a * ls[-1]))
         ls.pop()
@@ -132,15 +132,35 @@ class TridiagonalMatrix:
             x.append(m - l * x[-1])
         return Vector(reversed(x))
 
+    def unstable_linsolve(self, vector):
+        """
+        Solve SLE $Ax = vector$
+        return x
+        BUT!
+        Solve it with unstable method,
+        that sometimes works surprisingly (for me) bad. Realy bad.
+        """
+        assert len(self) == len(vector), "Vector and matrix should have same size"
+        y = [0, vector[0] / self.c[0]]
+        z = [1, - self.b[0] / self.c[0]]
+        for a, b, c, d in zip(self.a[1:-1], self.b[1:], self.c[1:], vector[1:]):
+            y.append((d - a * y[-2] - b * y[-1]) / c)
+            z.append(-(a * z[-2] + b * z[-1]) / c)
+        k = ((vector[-1] - self.a[-1] * y[-2] - self.b[-1] * y[-1]) /
+             (self.a[-1] * z[-2] + self.b[-1] * z[-1]))
+        return Vector(y + k * z for y, z in zip(y, z))
+
+
 
 if __name__ == '__main__':
     # with open('test') as file:
     #     m = TridiagonalMatrix.from_file(file)
     #     v = Vector.from_file(file)
-    m = TridiagonalMatrix.random(100)
-    x = Vector.random(100)
-    d = m * x
-    solution = m.linsolve(d)
-    # print(solution)
-    # print(x)
-    print(round(abs(x - solution), 10))
+    size = 100
+    m        = TridiagonalMatrix.random(size)
+    x        = Vector.random(size)
+    d        = m * x
+    solution = m.unstable_linsolve(d)
+    for a, b in zip(x, solution):
+        print(a, b, sep='\t')
+    print((abs(x - solution)))
