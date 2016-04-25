@@ -91,7 +91,12 @@ class TridiagonalMatrix:
         )
 
     def __sub__(self, other):
-        return self + (-other)
+        assert len(self) == len(other), "Matrices should have same size"
+        return TridiagonalMatrix(
+            [x - y for x, y in zip(self.a, other.a)],
+            [x - y for x, y in zip(self.b, other.b)],
+            [x - y for x, y in zip(self.c, other.c)]
+        )
 
     def __mul__(self, other):
         """
