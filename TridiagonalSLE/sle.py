@@ -4,7 +4,7 @@ from vector import Vector
 class TridiagonalMatrix:
     """
     TridiagonalMatrix --- matrix with three diagonals,
-    every other element is zero
+    each other element is zero
 
     """
     def __init__(self, a, b, c):
@@ -53,16 +53,12 @@ class TridiagonalMatrix:
                 for line in self.matrix()
         )
 
-    @staticmethod
-    def _zeros(n):
-        return [0] * n
-
     def matrix(self):
         """
         Return representation of self as a matrix
         """
         size = len(self) - 2
-        zeros = self._zeros
+        zeros = lambda n: [0] * n
         middle = [
             zeros(i - 1) + [a, b, c] + zeros(size - i)
                 for i, (a, b, c) in enumerate(
@@ -104,7 +100,7 @@ class TridiagonalMatrix:
         """
         assert len(self) == len(other), "Matrices should have same size"
         if isinstance(other, TridiagonalMatrix):
-            pass
+            raise NotImplementedError()
         elif isinstance(other, Vector):
             return Vector(
                 [self.b[0] * other[0] + self.c[0] * other[1]] +
@@ -164,7 +160,8 @@ def print_cute_table():
     """
     pattern = "{size}\t\t{linsolve}\t\t{unstable}"
     print("\t\tTable of errors\n" + '=' * 50 )
-    print("size of system\terror of linsolve\t\terror of unstable linsolve")
+    print("size of system\terror of linsolve\t\t" +
+            "error of unstable linsolve (they are just wonderful!)")
     for size in range(10, 101, 10):
         m            = TridiagonalMatrix.random(size)
         x            = Vector.random(size)
