@@ -156,16 +156,44 @@ class TridiagonalMatrix:
         return Vector(y + k * z for y, z in zip(y, z))
 
 
+def print_cute_table():
+    """
+    Create a table of errors of two methods
+        (but we know, which method is bad...)
+    Table based on random values.
+    """
+    pattern = "{size}\t\t{linsolve}\t\t{unstable}"
+    print("\t\tTable of errors\n" + '=' * 50 )
+    print("size of system\terror of linsolve\t\terror of unstable linsolve")
+    for size in range(10, 101, 10):
+        m            = TridiagonalMatrix.random(size)
+        x            = Vector.random(size)
+        d            = m * x
+        err          = abs(m.linsolve(d) - x)
+        err_unstable = abs(m.unstable_linsolve(d) - x)
+        print(pattern.format(size=size, linsolve=err, unstable=err_unstable))
+
+    print("\nJust fo fun:\n")
+    for size in range(100, 1001, 100):
+        m            = TridiagonalMatrix.random(size)
+        x            = Vector.random(size)
+        d            = m * x
+        err          = abs(m.linsolve(d) - x)
+        err_unstable = abs(m.unstable_linsolve(d) - x)
+        print(pattern.format(size=size, linsolve=err, unstable=err_unstable))
+
 
 if __name__ == '__main__':
     # with open('test') as file:
     #     m = TridiagonalMatrix.from_file(file)
     #     v = Vector.from_file(file)
-    size = 100
-    m        = TridiagonalMatrix.random(size)
-    x        = Vector.random(size)
-    d        = m * x
-    solution = m.unstable_linsolve(d)
-    for a, b in zip(x, solution):
-        print(a, b, sep='\t')
-    print((abs(x - solution)))
+    # size = 100
+    # m        = TridiagonalMatrix.random(size)
+    # x        = Vector.random(size)
+    # d        = m * x
+    # solution = m.unstable_linsolve(d)
+    # for a, b in zip(x, solution):
+    #     print(a, b, sep='\t')
+    # print((abs(x - solution)))
+
+    print_cute_table()
