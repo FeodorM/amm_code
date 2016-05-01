@@ -74,9 +74,9 @@ class TridiagonalMatrix:
     def __add__(self, other):
         assert len(self) == len(other), "Matrices should have same size"
         return TridiagonalMatrix(
-            [x + y for x, y in zip(self.a, other.a)],
-            [x + y for x, y in zip(self.b, other.b)],
-            [x + y for x, y in zip(self.c, other.c)]
+            self.a + other.a,
+            self.b + other.b,
+            self.c + other.c,
         )
 
     def __neg__(self):
@@ -162,22 +162,23 @@ def print_cute_table():
     print("\t\tTable of errors\n" + '=' * 50 )
     print("size of system\terror of linsolve\t\t" +
             "error of unstable linsolve (they are just wonderful!)")
-    for size in range(10, 101, 10):
+    for size in range(20, 401, 20):
         m            = TridiagonalMatrix.random(size)
+        m.a          = m.a + m.c + m.b
         x            = Vector.random(size)
         d            = m * x
         err          = abs(m.linsolve(d) - x)
         err_unstable = abs(m.unstable_linsolve(d) - x)
         print(pattern.format(size=size, linsolve=err, unstable=err_unstable))
 
-    print("\nJust fo fun:\n")
-    for size in range(100, 1001, 100):
-        m            = TridiagonalMatrix.random(size)
-        x            = Vector.random(size)
-        d            = m * x
-        err          = abs(m.linsolve(d) - x)
-        err_unstable = abs(m.unstable_linsolve(d) - x)
-        print(pattern.format(size=size, linsolve=err, unstable=err_unstable))
+    # print("\nJust fo fun:\n")
+    # for size in range(100, 1001, 100):
+    #     m            = TridiagonalMatrix.random(size)
+    #     x            = Vector.random(size)
+    #     d            = m * x
+    #     err          = abs(m.linsolve(d) - x)
+    #     err_unstable = abs(m.unstable_linsolve(d) - x)
+    #     print(pattern.format(size=size, linsolve=err, unstable=err_unstable))
 
 
 if __name__ == '__main__':
