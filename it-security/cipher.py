@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.6
 
 from sys import argv
 
@@ -16,6 +16,6 @@ s = argv[1]
 
 ciphered = chiper(s)
 dechiphered = dechipher(ciphered)
-print('input = "{}"'.format(s))
-print('chiphered = "{}"'.format(ciphered))
-print('dechiphered = "{}"'.format(dechiphered))
+print(f'input = "{s}"')
+print(f'chiphered = "{ciphered}"')
+print(f'dechiphered = "{dechiphered}"')
