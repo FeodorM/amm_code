@@ -10,7 +10,7 @@ function. Just don't. Bad things can happened.
 ### Usage
 1)
     1.  Comment 8-th line in main.py
-    2.  Run taskN main.py
+    2.  Run task1/main.py
     3.  Follow enter all required data
     4.  PROFIT
     
