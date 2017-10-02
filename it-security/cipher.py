@@ -1,5 +1,8 @@
 #!/usr/bin/env python3.6
 
+
+# шифровка / дешифровка
+
 from sys import argv
 
 def chiper(string):
@@ -8,9 +11,10 @@ def chiper(string):
 def dechipher(string):
     return ''.join(decipher_dict[x] for x in string)
 
-
-cipher_dict = dict(zip("abcdefghijklmnopqrstuvwxyz ", " abcdefghijklmnopqrstuvwxyz"))
-decipher_dict = {v: k for k, v in cipher_dict.items()}
+s_from = "abcdefghijklmnopqrstuvwxyz"
+s_to = "szfwldvghiytmxjqbkoncaerpu"
+cipher_dict = dict(zip(s_from, s_to))
+decipher_dict = dict(zip(s_to, s_from))
 
 s = argv[1]
 
