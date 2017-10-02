@@ -3,18 +3,18 @@
 *   matplotlib
 *   tkinter
 
-Do not enter anything except function when you need to enter
-function. Just don't. Bad things can happened.
+Не вводите ничего, кроме функции, когда требуется ввести функцию. Не стоит.
+Может случиться что-нибудь плохое.
 
 
-### Usage
+### Использование
 1)
-    1.  Comment 8-th line in main.py
-    2.  Run task1/main.py
-    3.  Follow enter all required data
+    1.  Закомментировать 8-ю строку в файле main.py
+    2.  Запустить task1/main.py
+    3.  Ввести все необходимые данные
     4.  PROFIT
     
 2) (might be linux only)
-    1.  Enter required data in task1/data
+    1.   task1/data
     2.  ./main.py < data
     3.  PROFIT 
