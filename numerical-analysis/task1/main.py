@@ -60,12 +60,18 @@ def euler(n: int, a: int, b: int, y0: float, z0: float,
 if __name__ == '__main__':
     def get_func(text: str, args) -> (Callable[[float, float, float], float], str):
         func_str = input(text)
+        {
+            "y' = ": "our func"
+            "z' = ": "our func"
+            "y = ": "etalon"
+            "z = ": "etalon"
+        }
         return parse(func_str, args), func_str
 
 
     n = int(input("n = "))
-    a = int(input("a (left boundary) = "))
-    b = int(input("b (right boundary) = "))
+    a = 1 #int(input("a (left boundary) = "))
+    b = 2 #int(input("b (right boundary) = "))
     y0 = float(input("y(a) = "))
     z0 = float(input("z(a) = "))
     funcs = [get_func(text, "x, y, z") for text in ("y' = ", "z' = ")] + \
