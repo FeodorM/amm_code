@@ -24,11 +24,11 @@ class Matrix[T](matrix: Seq[Seq[T]]) extends Serializable {
     .mkString("\n")
 
 
-  def size: Int = data.size
+  lazy val size: Int = data.size
 
-  def iterator: Iterator[Seq[T]] = data.iterator
+  lazy val iterator: Iterator[Seq[T]] = data.iterator
 
-  def transpose: Matrix[T] = data.indices.map(col)
+  lazy val transpose: Matrix[T] = data.indices.map(col)
 
   def ==(matrix: Matrix[T]): Boolean = data.zip(matrix.data).forall({case (x, y) => x == y})
 
@@ -55,13 +55,16 @@ class Matrix[T](matrix: Seq[Seq[T]]) extends Serializable {
 
   def col(n: Int): Seq[T] = data.map(_(n))
 
-  def rows: Seq[Seq[T]] = data
+  lazy val rows: Seq[Seq[T]] = data
 
-  def cols: Seq[Seq[T]] = data.indices.map(col)
+  lazy val cols: Seq[Seq[T]] = data.indices.map(col)
 
 }
 
 object Matrix {
   def matrixOfIndices(size: Int): Matrix[(Int, Int)] =
-    new Matrix[(Int, Int)]((0 until size).map(x => (0 until size).map(y => (x, y))))
+    (0 until size)
+      .map(x =>
+        (0 until size).map(y => (x, y))
+      )
 }
