@@ -9,28 +9,11 @@ sys.path.append('/home/fedor/code/amm_code/numerical-analysis')
 
 from typing import Sequence, Callable, List
 
-from matplotlib.patches import Patch
-from matplotlib.pyplot import plot, show, legend, savefig, title
-
 from utils.utils import parse, create_xs
 from tabulate import tabulate
 from random import choice
 
-
-colors = ['red', 'green', 'blue', 'black']
-
-
-def draw(xs: Sequence, arr, t, f) -> None:
-    # legend(loc='upper center', shadow=True, fontsize='x-large')
-    for (func, _), color in zip(arr, colors):
-        plot(xs, func, color=color)
-    legend(handles=[
-        Patch(color=color, label='${}$'.format(name))
-        for (_, name), color in zip(arr, colors)
-    ])
-    title(t)
-    savefig(f + '.png')
-
+from utils.draw import draw
 
 def euler(n: int, a: int, b: int, y0: float, z0: float,
           f1: Callable[[float, float, float], float],
